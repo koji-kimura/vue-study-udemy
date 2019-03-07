@@ -1,0 +1,10 @@
+p {
+  color: red;
+}
+#app ul {
+  list-style: none;
+}
+
+.done {
+  text-decoration: line-through;
+}
