@@ -8,8 +8,9 @@
   </head>
   <body>
     <div id="app">
-      // 初回だけテンプレートを評価して以降は静的なコンテンツになる
+      <!-- // 初回だけテンプレートを評価して以降は静的なコンテンツになる -->
       <p v-once>{{ message }}</p>
+      <p v-text="message"></p>
       <button v-on:click="clickHandler">click</button>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.js"></script>
