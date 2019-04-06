@@ -6,39 +6,39 @@ var app = new Vue({
     message: ''
   },
   watch: {
-    keyword: function(newKeyword, oldKeyword) {
-      //   console.log(newKeyword);
+    keyword: function(newKeyWord, oldKeyword) {
+      //   console.log(newKeyWord);
       this.message = 'waiting for you to stop typing...';
       this.debouncedGetAnswer();
     }
   },
-  created: function() {
-    // this.keyword = 'javascript';
+  // mountedでも大差はないとのこと
+  created() {
+    // this.keyword = 'Javascript';
     // this.getAnswer();
-    // イベント発火を抑制するコード
+    // △ debounceは跳ね返り
     this.debouncedGetAnswer = _.debounce(this.getAnswer, 1000);
   },
   methods: {
-    getAnswer: function() {
+    getAnswer() {
       if (this.keyword === '') {
         this.items = null;
         this.message = '';
         return;
       }
-      this.message = 'Lading...';
-      var vm = this;
-      var params = { page: 1, per_age: 20, query: this.keyword };
+      this.message = 'Loading';
+      var params = { page: 1, per_page: 20, query: this.keyword };
       axios
         .get('https://qiita.com/api/v2/items', { params })
-        .then(function(response) {
+        .then(response => {
           console.log(response);
-          vm.items = response.data;
+          this.items = response.data;
         })
-        .catch(function(error) {
-          vm.message = 'Error!' + error;
+        .catch(error => {
+          this.message = 'Error!' + error;
         })
-        .finally(function() {
-          vm.message = '';
+        .finally(() => {
+          this.message = '';
         });
     }
   }

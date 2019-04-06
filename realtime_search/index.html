@@ -6,16 +6,12 @@
   </head>
   <body>
     <div id="app">
-      <p>
-        <input type="text" v-model="keyword" />
-      </p>
-      <p>
-        {{ message }}
-      </p>
+      <p><input type="text" v-model="keyword" /></p>
+      <p>{{ message }}</p>
       <ul>
         <li v-for="item in items">
           <!-- {{ item.title }} -->
-          <a :href="item.url" target="_brank">{{ item.title }}</a> likes:{{
+          <a :href="item.url" target="_blank">{{ item.title }}</a> ★:{{
             item.likes_count
           }}
         </li>
