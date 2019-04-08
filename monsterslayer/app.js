@@ -4,17 +4,24 @@
     data: {
       playerHealth: 100,
       monsterHealth: 100,
-      gameIsRunning: false
+      gameIsRunning: false,
+      turns: []
     },
     methods: {
       startGame: function() {
         this.gameIsRunning = true;
         this.playerHealth = 100;
         this.monsterHealth = 100;
+        this.turns = [];
       },
       attack: function() {
         let damage = this.calculateDamage(3, 10);
         this.monsterHealth -= damage;
+        // unshiftは最初に要素を追加する
+        this.turns.unshift({
+          isPlayer: true,
+          text: `Player hits Monster for ${damage}`
+        });
         // こういうコードの実行をしているのは2回目の処理用の対策
         // trueならもうやめてしまう
         if (this.checkWin()) {
@@ -26,6 +33,10 @@
       specialAttack: function() {
         let damage = this.calculateDamage(10, 20);
         this.monsterHealth -= damage;
+        this.turns.unshift({
+          isPlayer: true,
+          text: `Player hits Monster hard for ${damage}`
+        });
         if (this.checkWin()) {
           return;
         }
@@ -37,6 +48,10 @@
         } else {
           this.playerHealth = 100;
         }
+        this.turns.unshift({
+          isPlayer: true,
+          text: `Player heals for 10`
+        });
       },
       giveUp: function() {
         this.gameIsRunning = false;
@@ -46,6 +61,10 @@
         damage = this.calculateDamage(5, 12);
         this.playerHealth -= damage;
         this.checkWin();
+        this.turns.unshift({
+          isPlayer: false,
+          text: ` Monster hits Player for ${damage}`
+        });
       },
       // ダメージ計算の共通化
       calculateDamage: function(min, max) {
